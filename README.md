@@ -19,7 +19,7 @@ from generated theme state.
 ## Showcase
 
 <p align="center">
-    <img src"./preview.png" alt="Linux desktop preview" />
+    <img src="./preview.png" alt="Linux desktop preview" />
 </p>
 
 ## What This Includes
