@@ -18,11 +18,7 @@ from generated theme state.
 
 ## Showcase
 
-Keeping the current `out.mp4` showcase for now:
-
 <video src="./out.mp4" controls width="100%"></video>
-
-If GitHub does not render the video inline, open [`out.mp4`](./out.mp4).
 
 ## What This Includes
 
@@ -134,27 +130,6 @@ dots add ~/.config/niri/niri/input.kdl
 dots commit -m "Update niri input config"
 dots push
 ```
-
-## Generated Files
-
-Generated theme files are intentionally not tracked in the dotfiles repo. The
-installer creates safe first-boot placeholders where needed, then Matugen and
-the wallpaper pipeline replace them.
-
-Keep these live and writable:
-
-```text
-~/.config/niri/colors.kdl
-~/.config/gtk-3.0/gtk.css
-~/.config/gtk-4.0/gtk.css
-~/.config/mpv/script-opts/niri_caelestia.conf
-~/.config/btop/themes/niri_caelestia.theme
-~/.config/Kvantum/MaterialAdw/
-~/.local/state/quickshell/user/generated/
-```
-
-Stable config and Matugen templates belong in the dotfiles repo. Generated
-outputs do not.
 
 ## Manual Build
 
