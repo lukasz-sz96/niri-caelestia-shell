@@ -53,6 +53,10 @@ Item {
                 opacity: root.workspace.isOccupied || root.workspace.activeWsId === root.workspace.ws ? 1.0 : 0.35
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+
+                transform: Translate {
+                    y: -1
+                }
             }
         }
 
