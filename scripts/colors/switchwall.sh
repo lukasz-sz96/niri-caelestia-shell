@@ -2,7 +2,7 @@
 
 # switchwall.sh — Generate Material You colors from a wallpaper image
 #
-# Orchestrates the full color pipeline (same as end-4 dotfiles):
+# Orchestrates the full color pipeline (same as the shell color pipeline):
 #   1. Set GNOME color-scheme (dark/light)
 #   2. Generate material_colors.scss via Python materialyoucolor
 #   3. Run matugen templates (~/.config/matugen/config.toml)

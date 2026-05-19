@@ -147,19 +147,14 @@ git clone https://github.com/Ayushkr2003/niri-caelestia-shell && cd niri-caelest
 
     > The setup script supports flags: `--skip-deps`, `--skip-python`, `--skip-services`
 
-5. Deploy dotfiles:
+5. Configure your user dotfiles:
 
-    ```sh
-    cp -r dotfiles/.config/* ~/.config/
-    ```
-
-    > [!IMPORTANT]
-    > Copying the `matugen` folder to `~/.config/` is **mandatory** for system-wide color syncing to work.
+    This repository no longer ships personal dotfiles. Keep user configuration, including Matugen templates, in your own dotfiles repo or copy it into `~/.config` separately.
 
 6. (Optional) Setup SDDM Theme:
 
     ```sh
-    bash dotfiles/niri-caelestia-sddm/setup.sh
+    bash themes/niri-caelestia-sddm/setup.sh
     ```
     > Select option `1` during setup to sync colors directly with the shell.
 

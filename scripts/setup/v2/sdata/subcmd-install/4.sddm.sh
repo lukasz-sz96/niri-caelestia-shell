@@ -40,7 +40,7 @@ echo -e "${STY_BLUE}Enabling SDDM service...${STY_RST}"
 v sudo systemctl enable sddm
 
 # 3. Run the theme setup script with automated input
-SDDM_THEME_SRC="$REPO_ROOT/dotfiles/niri-caelestia-sddm"
+SDDM_THEME_SRC="$REPO_ROOT/themes/niri-caelestia-sddm"
 if [[ -d "$SDDM_THEME_SRC" ]]; then
     echo -e "${STY_BLUE}Configuring niri-caelestia-sddm theme...${STY_RST}"
     

@@ -1,21 +1,13 @@
-# Config file installation for niri-caelestia-shell
-echo -e "${STY_CYAN}Deploying configuration files and building the shell...${STY_RST}"
+# Shell installation for niri-caelestia-shell
+echo -e "${STY_CYAN}Building and installing the shell...${STY_RST}"
 
-# 1. Perform Safety Backup
-# We backup clashing items from ~/.config before installing dotfiles
-echo -e "${STY_BLUE}Running pre-installation backup...${STY_RST}"
-# Updated path to dotfiles/.config
-backup_clashing_configs "$REPO_ROOT/dotfiles/.config" "$XDG_CONFIG_HOME" "$BACKUP_DIR"
-
-# 2. Ensure Target Directories
-mkdir -p "$XDG_CONFIG_HOME/niri"
+# 1. Ensure Target Directories
 mkdir -p "$XDG_CONFIG_HOME/quickshell/niri-caelestia-shell"
-mkdir -p "$XDG_CONFIG_HOME/Kvantum"
 mkdir -p "$XDG_STATE_HOME/quickshell/user/generated/terminal"
 mkdir -p "$XDG_STATE_HOME/quickshell/user/generated/wallpaper"
 mkdir -p "$HOME/Pictures/Wallpapers"
 
-# 3. Install & Build Shell Code
+# 2. Install & Build Shell Code
 echo -e "${STY_BLUE}Building and installing shell...${STY_RST}"
 TARGET_DIR="$XDG_CONFIG_HOME/quickshell/niri-caelestia-shell"
 
@@ -35,20 +27,13 @@ v cmake --build build
 echo -e "  ${STY_DIM}Installing to system...${STY_RST}"
 v sudo cmake --install build
 
-# 4. Deploy Dotfiles
-echo -e "${STY_BLUE}Deploying dotfiles to ~/.config/...${STY_RST}"
-# Updated path to target items inside dotfiles/.config
-if [[ -d "$TARGET_DIR/dotfiles/.config" ]]; then
-  cp -rf "$TARGET_DIR/dotfiles/.config"/* "$XDG_CONFIG_HOME/"
-fi
-
-# 5. Copy Wallpapers
+# 3. Copy Wallpapers
 echo -e "${STY_BLUE}Copying wallpapers to ~/Pictures/Wallpapers/...${STY_RST}"
 if [[ -d "$TARGET_DIR/images/Wallpapers" ]]; then
   cp -rf "$TARGET_DIR/images/Wallpapers"/* "$HOME/Pictures/Wallpapers/"
 fi
 
-# 6. Specialized Font Installer (Google Sans Flex)
+# 4. Specialized Font Installer (Google Sans Flex)
 install_google_sans_flex(){
   local src_url="https://github.com/end-4/google-sans-flex"
   local target_dir="${XDG_DATA_HOME}/fonts/google-sans-flex"
@@ -67,4 +52,4 @@ install_google_sans_flex
 # Return to the original setup directory
 cd - > /dev/null
 
-echo -e "${STY_GREEN}Installation, Build, and Backup complete!${STY_RST}"
+echo -e "${STY_GREEN}Shell installation complete!${STY_RST}"
