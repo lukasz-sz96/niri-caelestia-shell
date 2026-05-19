@@ -44,11 +44,9 @@ Item {
                 text: {
                     //TODO: Add config option to choose between name/number/both for workspaces
 
-                    const wsName = Niri.getWorkspaceNameByIndex(root.workspace.index) || (root.workspace.ws);
-                    const label = Config.bar.workspaces.label || root.workspace.ws;
-                    const occupiedLabel = Config.bar.workspaces.occupiedLabel || label;
-                    const activeLabel = Config.bar.workspaces.activeLabel || (root.workspace.isOccupied ? occupiedLabel : label);
-                    return root.workspace.activeWsId === root.workspace.ws ? activeLabel : root.workspace.isOccupied ? occupiedLabel : label;
+                    const japaneseNumbers = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+                    const wsNumber = root.workspace.ws;
+                    return japaneseNumbers[wsNumber - 1] ?? wsNumber.toString();
                 }
 
                 color: Config.bar.workspaces.occupiedBg || root.workspace.isOccupied || root.workspace.activeWsId === root.workspace.ws ? Colours.palette.m3onSurface : Colours.layer(Colours.palette.m3outlineVariant, 2)
