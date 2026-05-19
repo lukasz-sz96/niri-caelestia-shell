@@ -18,7 +18,9 @@ from generated theme state.
 
 ## Showcase
 
-<video src="./out.mp4" controls width="100%"></video>
+<p align="center">
+    <img src"./preview.png" alt="Linux desktop preview" />
+</p>
 
 ## What This Includes
 
