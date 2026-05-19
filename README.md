@@ -149,7 +149,21 @@ git clone https://github.com/Ayushkr2003/niri-caelestia-shell && cd niri-caelest
 
 5. Configure your user dotfiles:
 
-    This repository no longer ships personal dotfiles. Keep user configuration, including Matugen templates, in your own dotfiles repo or copy it into `~/.config` separately.
+    Personal dotfiles live in a separate public bare Git repo:
+
+    ```sh
+    git clone --bare https://github.com/lukasz-sz96/niri-caelestia-dotfiles.git ~/.dotfiles.git
+    git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" checkout -f main
+    git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" config status.showUntrackedFiles no
+    ```
+
+    The automated v2 installer does this for you. It clones
+    `https://github.com/lukasz-sz96/niri-caelestia-dotfiles.git` into
+    `~/.dotfiles.git`, with `$HOME` as the work tree. Existing target files are
+    backed up under
+    `~/.local/state/niri-caelestia-shell/dotfiles-install-backups/` before
+    checkout. Override the source with `DOTFILES_REMOTE_URL` or skip this step
+    with `SKIP_DOTFILES=true`.
 
 6. (Optional) Setup SDDM Theme:
 

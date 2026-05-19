@@ -80,3 +80,73 @@ function backup_clashing_configs(){
     echo -e "${STY_GREEN}Backup saved to: $session_backup${STY_RST}"
   fi
 }
+
+function install_bare_dotfiles(){
+  if [[ "${SKIP_DOTFILES:-false}" == true ]]; then
+    echo -e "${STY_YELLOW}Skipping dotfiles install (SKIP_DOTFILES=true).${STY_RST}"
+    return 0
+  fi
+
+  if [[ ! -d "$DOTFILES_GIT_DIR" ]]; then
+    if [[ -z "$DOTFILES_REMOTE_URL" ]]; then
+      echo -e "${STY_YELLOW}Dotfiles repo not found at $DOTFILES_GIT_DIR and DOTFILES_REMOTE_URL is empty; skipping dotfiles install.${STY_RST}"
+      return 0
+    fi
+
+    echo -e "${STY_BLUE}Cloning dotfiles from $DOTFILES_REMOTE_URL to $DOTFILES_GIT_DIR...${STY_RST}"
+    mkdir -p "$(dirname "$DOTFILES_GIT_DIR")"
+    git clone --bare "$DOTFILES_REMOTE_URL" "$DOTFILES_GIT_DIR"
+  fi
+
+  if ! git --git-dir="$DOTFILES_GIT_DIR" rev-parse --is-bare-repository >/dev/null 2>&1; then
+    echo -e "${STY_RED}$DOTFILES_GIT_DIR is not a bare Git repository.${STY_RST}"
+    return 1
+  fi
+
+  if [[ -n "$DOTFILES_REMOTE_URL" ]] && ! git --git-dir="$DOTFILES_GIT_DIR" remote get-url origin >/dev/null 2>&1; then
+    git --git-dir="$DOTFILES_GIT_DIR" remote add origin "$DOTFILES_REMOTE_URL"
+  fi
+
+  local checkout_ref="$DOTFILES_REF"
+  if [[ "$checkout_ref" == "HEAD" ]]; then
+    checkout_ref="$(git --git-dir="$DOTFILES_GIT_DIR" symbolic-ref --quiet --short HEAD 2>/dev/null || printf "HEAD")"
+  fi
+
+  local tracked_paths=()
+  mapfile -t tracked_paths < <(git --git-dir="$DOTFILES_GIT_DIR" ls-tree -r --name-only "$checkout_ref")
+  if [[ ${#tracked_paths[@]} -eq 0 ]]; then
+    echo -e "${STY_YELLOW}No tracked dotfiles found in $DOTFILES_GIT_DIR at $checkout_ref.${STY_RST}"
+    return 0
+  fi
+
+  echo -e "${STY_BLUE}Applying dotfiles from $DOTFILES_GIT_DIR ($checkout_ref) to $DOTFILES_WORK_TREE...${STY_RST}"
+
+  local session_backup="$DOTFILES_BACKUP_DIR/$(date +%Y%m%d_%H%M%S)"
+  local backed_up=false
+  local rel target backup_target
+
+  for rel in "${tracked_paths[@]}"; do
+    if [[ "$rel" == /* || "$rel" == *".."* ]]; then
+      echo -e "${STY_RED}Refusing unsafe dotfiles path: $rel${STY_RST}"
+      return 1
+    fi
+
+    target="$DOTFILES_WORK_TREE/$rel"
+    if [[ -e "$target" || -L "$target" ]]; then
+      backup_target="$session_backup/$rel"
+      mkdir -p "$(dirname "$backup_target")"
+      cp -a "$target" "$backup_target"
+      backed_up=true
+    fi
+  done
+
+  if $backed_up; then
+    echo -e "${STY_GREEN}Existing dotfiles backup saved to: $session_backup${STY_RST}"
+  fi
+
+  mkdir -p "$DOTFILES_WORK_TREE"
+  git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$DOTFILES_WORK_TREE" checkout -f "$checkout_ref"
+  git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$DOTFILES_WORK_TREE" config status.showUntrackedFiles no
+
+  echo -e "${STY_GREEN}Dotfiles installed from $DOTFILES_GIT_DIR.${STY_RST}"
+}

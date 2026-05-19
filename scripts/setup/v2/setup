@@ -44,13 +44,20 @@ Subcommands:
   install        Full installation (Deps + Setup + Files + SDDM).
   install-deps   Stage 1: Install system dependencies.
   install-setups Stage 2: Configure permissions, services, and groups.
-  install-files  Stage 3: Build shell and copy bundled assets.
+  install-files  Stage 3: Apply dotfiles, build shell, and copy bundled assets.
   install-sddm   Stage 4: Setup SDDM login theme.
   uninstall      Uninstall niri-caelestia-shell.
   help           Show this help message.
 
 For each subcommand, use -h for details:
   $0 <subcommand> -h
+
+Dotfiles:
+  install-files clones DOTFILES_REMOTE_URL into DOTFILES_GIT_DIR as a bare repo
+  and checks it out into DOTFILES_WORK_TREE. Defaults:
+    DOTFILES_REMOTE_URL=$DOTFILES_REMOTE_URL
+    DOTFILES_GIT_DIR=$DOTFILES_GIT_DIR
+    DOTFILES_WORK_TREE=$DOTFILES_WORK_TREE
 "
 }
 

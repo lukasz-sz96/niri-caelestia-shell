@@ -17,3 +17,8 @@ STY_RST='\e[00m'
 # Requested backup location
 BACKUP_DIR="$HOME/niri-caelestia-shell.backup"
 VENV_DIR="${XDG_STATE_HOME}/quickshell/.venv"
+DOTFILES_GIT_DIR="${DOTFILES_GIT_DIR:-$HOME/.dotfiles.git}"
+DOTFILES_WORK_TREE="${DOTFILES_WORK_TREE:-$HOME}"
+DOTFILES_REF="${DOTFILES_REF:-HEAD}"
+DOTFILES_REMOTE_URL="${DOTFILES_REMOTE_URL:-https://github.com/lukasz-sz96/niri-caelestia-dotfiles.git}"
+DOTFILES_BACKUP_DIR="${DOTFILES_BACKUP_DIR:-$XDG_STATE_HOME/niri-caelestia-shell/dotfiles-install-backups}"

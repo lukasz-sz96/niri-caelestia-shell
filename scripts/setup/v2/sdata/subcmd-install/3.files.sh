@@ -1,5 +1,5 @@
-# Shell installation for niri-caelestia-shell
-echo -e "${STY_CYAN}Building and installing the shell...${STY_RST}"
+# Shell and dotfiles installation for niri-caelestia-shell
+echo -e "${STY_CYAN}Installing dotfiles, then building and installing the shell...${STY_RST}"
 
 # 1. Ensure Target Directories
 mkdir -p "$XDG_CONFIG_HOME/quickshell/niri-caelestia-shell"
@@ -7,7 +7,10 @@ mkdir -p "$XDG_STATE_HOME/quickshell/user/generated/terminal"
 mkdir -p "$XDG_STATE_HOME/quickshell/user/generated/wallpaper"
 mkdir -p "$HOME/Pictures/Wallpapers"
 
-# 2. Install & Build Shell Code
+# 2. Install user dotfiles from the external bare repo
+install_bare_dotfiles
+
+# 3. Install & Build Shell Code
 echo -e "${STY_BLUE}Building and installing shell...${STY_RST}"
 TARGET_DIR="$XDG_CONFIG_HOME/quickshell/niri-caelestia-shell"
 
@@ -27,13 +30,13 @@ v cmake --build build
 echo -e "  ${STY_DIM}Installing to system...${STY_RST}"
 v sudo cmake --install build
 
-# 3. Copy Wallpapers
+# 4. Copy Wallpapers
 echo -e "${STY_BLUE}Copying wallpapers to ~/Pictures/Wallpapers/...${STY_RST}"
 if [[ -d "$TARGET_DIR/images/Wallpapers" ]]; then
   cp -rf "$TARGET_DIR/images/Wallpapers"/* "$HOME/Pictures/Wallpapers/"
 fi
 
-# 4. Specialized Font Installer (Google Sans Flex)
+# 5. Specialized Font Installer (Google Sans Flex)
 install_google_sans_flex(){
   local src_url="https://github.com/end-4/google-sans-flex"
   local target_dir="${XDG_DATA_HOME}/fonts/google-sans-flex"
@@ -52,4 +55,4 @@ install_google_sans_flex
 # Return to the original setup directory
 cd - > /dev/null
 
-echo -e "${STY_GREEN}Shell installation complete!${STY_RST}"
+echo -e "${STY_GREEN}Dotfiles and shell installation complete!${STY_RST}"
