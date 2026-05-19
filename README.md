@@ -157,13 +157,15 @@ git clone https://github.com/Ayushkr2003/niri-caelestia-shell && cd niri-caelest
     git --git-dir="$HOME/.dotfiles.git" --work-tree="$HOME" config status.showUntrackedFiles no
     ```
 
-    The automated v2 installer does this for you. It clones
-    `https://github.com/lukasz-sz96/niri-caelestia-dotfiles.git` into
+    The automated v2 installer does this for you. It clones or updates
+    `https://github.com/lukasz-sz96/niri-caelestia-dotfiles.git` in
     `~/.dotfiles.git`, with `$HOME` as the work tree. Existing target files are
     backed up under
     `~/.local/state/niri-caelestia-shell/dotfiles-install-backups/` before
-    checkout. Override the source with `DOTFILES_REMOTE_URL` or skip this step
-    with `SKIP_DOTFILES=true`.
+    checkout. Generated Matugen outputs stay untracked; the installer creates
+    first-boot placeholders for files like `~/.config/niri/colors.kdl`.
+    Override the source with `DOTFILES_REMOTE_URL` or skip this step with
+    `SKIP_DOTFILES=true`.
 
 6. (Optional) Setup SDDM Theme:
 
